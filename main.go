@@ -2,34 +2,36 @@ package main
 
 import "fmt"
 
-
-wordLen := Reader()
-
 func main() {
-
+	wordLen := Reader()
 	fmt.Println(wordLen)
 	fmt.Println(len(wordLen))
 	hider := "_ "
 	for i := 0; i < len(wordLen); i++ {
 		fmt.Print(hider)
 	}
+	inputLetter(wordLen)
 }
 
-func inputLetter() {
+func inputLetter(word string) {
 	var letter string
-	fmt.Scanln(letter)
+	fmt.Println("\nEntrez une lettre :")
+	fmt.Scanln(&letter)
 	if len(letter) > 1 {
 		fmt.Println("Impossible, entrez une seule lettre.")
+		inputLetter(word)
 	} else {
-		for i := 0; i < len(wordLen)-1; i++ {
-			if letter == wordLen[i] {
+
+		for i := 0; i < len(word); i++ {
+
+			if letter == string(word[i]) {
 				fmt.Println("La lettre est dans le mot")
 				break
 			} else {
-				("La lettre n'est pas dans le mot")
+				fmt.Println("La lettre n'est pas dans le mot")
+				break
 			}
 		}
-	
+
 	}
 }
-
