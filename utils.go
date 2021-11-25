@@ -12,7 +12,7 @@ func Reader() string {
 	file, _ := os.Open("words.txt")
 	scanner := bufio.NewScanner(file)
 	rand.Seed(time.Now().UnixNano())
-	randomNumber := rand.Intn(36)
+	randomNumber := rand.Intn(Counter())
 	i := 0
 	for scanner.Scan() {
 		if i == randomNumber {
@@ -21,4 +21,14 @@ func Reader() string {
 		i++
 	}
 	return word
+}
+
+func Counter() int {
+	file, _ := os.Open("words.txt")
+	scanner := bufio.NewScanner(file)
+	var count int
+	for scanner.Scan() { //while \n available 
+		count++
+	}
+	return count
 }
