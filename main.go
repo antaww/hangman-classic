@@ -4,21 +4,24 @@ import (
 	"fmt"
 )
 
+var hider []string
+
 func main() {
+	tries := 10
 	wordLen := Reader()
-	fmt.Println(wordLen)      //pour les tests
-	fmt.Println(len(wordLen)) //pour les tests
-	hider(wordLen)            //affiche le mot sous forme cachée
-	inputLetter(wordLen)      //demande d'input lettre
+	hiderr(wordLen)
+	fmt.Println(wordLen)        //pour les tests
+	fmt.Println(len(wordLen))   //pour les tests
+	inputLetter(wordLen, tries) //demande d'input lettre
 }
 
-func inputLetter(word string) {
+func inputLetter(word string, try int) {
 	var letter string
 	fmt.Println("\nEntrez une lettre :")
 	fmt.Scanln(&letter)
 	if len(letter) > 1 {
 		fmt.Println("Impossible, entrez une seule lettre.")
-		inputLetter(word)
+		inputLetter(word, try)
 	} else {
 		inWord := false
 		for i := 0; i < len(word); i++ {
@@ -29,21 +32,27 @@ func inputLetter(word string) {
 		}
 		if inWord {
 			fmt.Println("La lettre est dans le mot")
+			for index, char := range word {
+				if letter == string(char) {
+					hider[index] = letter
+				}
+			}
 		} else {
-			fmt.Println("La lettre n'est pas dans le mot")
+			fmt.Printf("La lettre %v n'est pas dans le mot\n", letter)
+			if try > 0 {
+				try--
+				fmt.Printf("Il ne vous reste plus que %v essais \n", try)
+			}
+
 		}
-
+		fmt.Println(hider)
 	}
+	inputLetter(word, try)
 }
 
-func hider(word string) {
-	var hidden []string
+func hiderr(word string) {
 	for i := 0; i < len(word); i++ {
-		hidden = append(hidden, "_")
+		hider = append(hider, "_")
 	}
-	fmt.Println(hidden)
-}
-
-func Replace(word string) {
-
+	fmt.Println(hider)
 }
