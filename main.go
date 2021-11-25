@@ -1,12 +1,15 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 )
 
 var hider []string
+var BR *bufio.Reader
 
 func main() {
+	Clear()
 	tries := 10
 	wordLen := Reader()
 	hiderr(wordLen)
@@ -17,6 +20,7 @@ func main() {
 
 func inputLetter(word string, try int) {
 	var letter string
+
 	fmt.Println("\nEntrez une lettre :")
 	fmt.Scanln(&letter)
 	if len(letter) > 1 {
@@ -39,15 +43,34 @@ func inputLetter(word string, try int) {
 			}
 		} else {
 			fmt.Printf("La lettre %v n'est pas dans le mot\n", letter)
-			if try > 0 {
+			if try > 1 {
 				try--
 				fmt.Printf("Il ne vous reste plus que %v essais \n", try)
+			} else {
+				fmt.Println("Nombre d'essais insuffisant...")
+				fmt.Println("Fermeture du jeu...")
+				Close()
 			}
 
 		}
+		Input()
+		Clear()
 		fmt.Println(hider)
 	}
-	inputLetter(word, try)
+	stillHider := false
+	for index, _ := range word {
+		if hider[index] == "_" {
+			stillHider = true
+			inputLetter(word, try)
+			break
+		}
+	}
+	if stillHider == false {
+		fmt.Println("Bravo vous avez réussi !")
+		Input()
+		Close()
+	}
+
 }
 
 func hiderr(word string) {
