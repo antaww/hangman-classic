@@ -1,24 +1,30 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
+	"math/rand"
+	"time"
 )
 
 var hider []string
-var BR *bufio.Reader
 
 func main() {
 	Clear()
-	tries := 10
+	Load()
+	Input()
+	Clear()
+	tries := 0
 	wordLen := Reader()
 	hiderr(wordLen)
-	fmt.Println(wordLen)        //pour les tests
-	fmt.Println(len(wordLen))   //pour les tests
+	Reveal(wordLen)
+	// fmt.Println(wordLen)        //pour les tests
+	// fmt.Println(len(wordLen))   //pour les tests
+
 	inputLetter(wordLen, tries) //demande d'input lettre
 }
 
 func inputLetter(word string, try int) {
+	Hang(try)
 	var letter string
 
 	fmt.Println("\nEntrez une lettre :")
@@ -43,11 +49,12 @@ func inputLetter(word string, try int) {
 			}
 		} else {
 			fmt.Printf("La lettre %v n'est pas dans le mot\n", letter)
-			if try > 1 {
-				try--
-				fmt.Printf("Il ne vous reste plus que %v essais \n", try)
+			if try < 9 {
+				try++
+				fmt.Printf("Il ne vous reste plus que %v essais \n", 10-try)
 			} else {
 				fmt.Println("Nombre d'essais insuffisant...")
+				fmt.Printf("Le mot était %v\n", word)
 				fmt.Println("Fermeture du jeu...")
 				Close()
 			}
@@ -77,5 +84,17 @@ func hiderr(word string) {
 	for i := 0; i < len(word); i++ {
 		hider = append(hider, "_")
 	}
+	hider = Reveal(word)
 	fmt.Println(hider)
+
+}
+
+func Reveal(word string) []string {
+	random := len(word)/2 - 1
+	for i := 0; i < random; i++ {
+		rand.Seed(time.Now().UnixNano())
+		randomNumber := rand.Intn(len(word) - 1)
+		hider[randomNumber] = string(word[randomNumber])
+	}
+	return hider
 }
