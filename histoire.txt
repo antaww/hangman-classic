@@ -9,7 +9,7 @@ code
 regime
 totalitarisme
 fascisme
-musolini
+mussolini
 furher
 extermination
 auschwitz
@@ -29,7 +29,7 @@ adolf
 nationalisme
 socialiste
 urss
-nkvd 
+nkvd
 blitzkrieg
 meinkampf
 scheisse
@@ -49,3 +49,8 @@ xenophobe
 bolchevisme
 concentration
 camp
+genocide
+exploitation
+elimination
+famine
+four

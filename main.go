@@ -7,6 +7,7 @@ import (
 )
 
 var hider []string
+var used []string
 
 func main() {
 	Clear()
@@ -17,18 +18,27 @@ func main() {
 	wordLen := Reader()
 	hiderr(wordLen)
 	Reveal(wordLen)
-	// fmt.Println(wordLen)        //pour les tests
-	// fmt.Println(len(wordLen))   //pour les tests
+	// fmt.Println(wordLen)      //pour les tests
+	// fmt.Println(len(wordLen)) //pour les tests
 
-	inputLetter(wordLen, tries) //demande d'input lettre
+	inputLetter(wordLen, tries)
 }
 
 func inputLetter(word string, try int) {
 	Hang(try)
 	var letter string
+	fmt.Println(letter)
 
+	fmt.Println("Lettres utilisées : ", used)
 	fmt.Println("\nEntrez une lettre :")
 	fmt.Scanln(&letter)
+	used = append(used, letter)
+
+	if letter == word {
+		fmt.Println("Bravo vous avez réussi !")
+		Input()
+		Close()
+	}
 	if len(letter) > 1 {
 		fmt.Println("Impossible, entrez une seule lettre.")
 		inputLetter(word, try)
@@ -41,7 +51,7 @@ func inputLetter(word string, try int) {
 			}
 		}
 		if inWord {
-			fmt.Println("La lettre est dans le mot")
+			fmt.Printf("La lettre %v est dans le mot\n", letter)
 			for index, char := range word {
 				if letter == string(char) {
 					hider[index] = letter
