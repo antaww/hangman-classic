@@ -14,12 +14,15 @@ func main() {
 	Load()
 	Input()
 	Clear()
+	Rules()
+	Input()
+	Clear()
 	tries := 0
 	wordLen := Reader()
 	hiderr(wordLen)
 	Reveal(wordLen)
-	// fmt.Println(wordLen)      //pour les tests
-	// fmt.Println(len(wordLen)) //pour les tests
+	fmt.Println(wordLen)      //pour les tests
+	fmt.Println(len(wordLen)) //pour les tests
 
 	inputLetter(wordLen, tries)
 }
@@ -29,17 +32,38 @@ func inputLetter(word string, try int) {
 	var letter string
 	fmt.Println(letter)
 
-	fmt.Println("Lettres utilisées : ", used)
-	fmt.Println("\nEntrez une lettre :")
+	fmt.Println("Déjà utilisé(s) : ", used)
+	fmt.Println("\nEntrez votre choix :")
 	fmt.Scanln(&letter)
+	for _, char := range used {
+		if letter == string(char) {
+			fmt.Println("Essayez autre chose, vous avez déjà essayé ceci !")
+			inputLetter(word, try)
+		}
+	}
 	used = append(used, letter)
 
-	if letter == word {
-		fmt.Println("Bravo vous avez réussi !")
-		Input()
-		Close()
-	}
 	if len(letter) > 1 {
+		if letter == word {
+			fmt.Println("Bravo vous avez réussi !")
+			Input()
+			Close()
+		} else {
+			fmt.Printf("Le mot %v est incorrect.\n", letter)
+			if try < 9 {
+				try = try + 2
+				fmt.Printf("Il ne vous reste plus que %v essais \n", 10-try)
+				inputLetter(word, try)
+			} else {
+				fmt.Println("Nombre d'essais insuffisant...")
+				fmt.Printf("Le mot était %v\n", word)
+				fmt.Println("Fermeture du jeu...")
+				Close()
+			}
+		}
+	}
+
+	if len(letter) < 1 {
 		fmt.Println("Impossible, entrez une seule lettre.")
 		inputLetter(word, try)
 	} else {
