@@ -21,8 +21,8 @@ func main() {
 	wordLen := Reader()
 	hiderr(wordLen)
 	Reveal(wordLen)
-	fmt.Println(wordLen)      //pour les tests
-	fmt.Println(len(wordLen)) //pour les tests
+	// fmt.Println(wordLen)      //pour les tests
+	// fmt.Println(len(wordLen)) //pour les tests
 
 	inputLetter(wordLen, tries)
 }

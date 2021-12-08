@@ -10,7 +10,6 @@ import (
 )
 
 func Reader() string {
-
 	var word string
 	file, _ := os.Open("words.txt")
 	scanner := bufio.NewScanner(file)
